@@ -34,6 +34,8 @@ const slides = [
 	},
 ]
 
+const firstIndex = 0;
+
 let firstSlide, lastSlide;
 
 const slidesWrapperEl = document.querySelector('.slides-wrapper');
@@ -75,7 +77,7 @@ function createImage(slide) {
 function createSlideElement(slide, i) {
 	const liEl = document.createElement('li');
 	liEl.className = 'slide';
-	if ( i === 0 ) {
+	if ( i === firstIndex ) {
 		liEl.classList.add('active');
 		firstSlide = liEl;
 	}
