@@ -36,11 +36,11 @@ const slides = [
 
 const firstIndex = 0;
 
-let firstSlide, lastSlide, firstDot, lastDot;
+let firstSlide, lastSlide, firstThumb, lastThumb;
 
-// prendo elemento 'dots'
-const dotsEl = document.querySelector('.dots');
-dotsEl.innerHTML = '';
+// prendo elemento 'thumbnails'
+const thumbnailsEl = document.querySelector('.thumbnails');
+thumbnailsEl.innerHTML = '';
 
 const slidesWrapperEl = document.querySelector('.slides-wrapper');
 slidesWrapperEl.addEventListener('mouseenter', slidesWrapperHover);
@@ -95,34 +95,34 @@ function createSlideElement(slide, i) {
 	return liEl;
 }
 
-// per ogni oggetto presente nell'array creo un li e un dot
+// per ogni oggetto presente nell'array creo un li e una thumbnails
 // e li inserisco nella pagina
 slides.forEach((slide, i) => {
-	slidesWrapperEl.append(createSlideElement(slide,i));
-    const dotEl = createDot(i);
-    // metto dot dentro a dots
-    dotsEl.append(dotEl);
+	slidesWrapperEl.append(createSlideElement(slide, i));
+    const thumbEl = createThumb(slide, i);
+    // metto thumbnail dentro a thumbnails
+    thumbnailsEl.append(thumbEl);
 });
 
-// funzione che crea un dot
-function createDot(i) {
-    const dotEl = document.createElement('div');
-    dotEl.className = 'dot';
-    dotEl.classList.add(`dot${i+1}`);
-    // aggiungo la classe active al primo dot
+// funzione che crea una thumbnail
+function createThumb(slide, i) {
+    const thumbEl = document.createElement('div');
+    thumbEl.className = 'thumbnail';
+    thumbEl.classList.add(`thumbnail${i+1}`);
+    thumbEl.innerHTML = `<img src="${slide.url}">`
+    // aggiungo la classe active alla prima thumbnail
     if ( i === firstIndex ) {
-        dotEl.classList.add('active');
+        thumbEl.classList.add('active');
     }
-    // salvo primo dot
+    // salvo prima thumbnail
     if ( i === 0 ) {
-        firstDot = dotEl;
+        firstThumb = thumbEl;
     }
-
-    // salvo ultimo dot
+    // salvo ultima thumbnail
     if ( i === slides.length - 1 ) {
-        lastDot = dotEl;
+        lastThumb = thumbEl;
     }
-    return dotEl;
+    return thumbEl;
 }
 
 const nextArrowEl = document.querySelector('.arrow-next');
@@ -131,20 +131,20 @@ const nextArrowEl = document.querySelector('.arrow-next');
 function nextArrowClick() {
     const activeEl = document.querySelector('.slide.active');
     activeEl.classList.remove('active');
-    const activeDotEl = dotsEl.querySelector('.active');
-    activeDotEl.classList.remove('active');
+    const activeThumbEl = thumbnailsEl.querySelector('.active');
+    activeThumbEl.classList.remove('active');
     if ( activeEl.nextElementSibling != null ) { // se c'è un elemento successivo lo visualizzo
         // slide
         const nextLiEl = activeEl.nextElementSibling;
         nextLiEl.classList.add('active');
-        // dot
-        const nextDotEl = activeDotEl.nextElementSibling;
-        nextDotEl.classList.add('active');
+        // thumbnail
+        const nextThumbEl = activeThumbEl.nextElementSibling;
+        nextThumbEl.classList.add('active');
     } else { // altrimenti visualizzo il primo
         // slide
         firstSlide.classList.add('active');
-        //dot
-        firstDot.classList.add('active');
+        // thumbnail
+        firstThumb.classList.add('active');
     }
 }
 
@@ -156,31 +156,31 @@ const prevArrowEl = document.querySelector('.arrow-prev');
 function prevArrowClick() {
     const activeEl = document.querySelector('.slide.active');
     activeEl.classList.remove('active');
-    const activeDotEl = dotsEl.querySelector('.active');
-    activeDotEl.classList.remove('active');
+    const activeThumbEl = thumbnailsEl.querySelector('.active');
+    activeThumbEl.classList.remove('active');
     if ( activeEl.previousElementSibling != null ) { // se c'è un elemento precedente lo visualizzo
         // slide
         const prevLiEl = activeEl.previousElementSibling;
         prevLiEl.classList.add('active');
-        // dot
-        const prevDotEl = activeDotEl.previousElementSibling;
-        prevDotEl.classList.add('active');
+        // thumbnail
+        const prevThumbEl = activeThumbEl.previousElementSibling;
+        prevThumbEl.classList.add('active');
     } else { // altrimenti visualizzo l'ultimo
         //slide
         lastSlide.classList.add('active');
-        //dot
-        lastDot.classList.add('active');
+        // thumbnail
+        lastThumb.classList.add('active');
     }
 }
 
 prevArrowEl.addEventListener('click', prevArrowClick);
 
-dotsEl.addEventListener('click', function(){
-    let dotEl = dotsEl.querySelector(':hover');
-    if ( dotEl != null ) {
+thumbnailsEl.addEventListener('click', function(){
+    let thumbEl = thumbnailsEl.querySelector(':hover');
+    if ( thumbEl != null ) {
         let index = 0;
         // trovo l'index dell'elemento
-        while( (dotEl = dotEl.previousSibling) != null ) {
+        while( (thumbEl = thumbEl.previousSibling) != null ) {
             index++;
         }
         // prendo la slide corrente e la prossima da visualizzare
@@ -190,17 +190,17 @@ dotsEl.addEventListener('click', function(){
         activeSlideEl.classList.remove('active');
         nextActiveSlideEl.classList.add('active');
     
-        // prendo il dot corrente e il prossimo attivo
-        const activeDotEl = dotsEl.querySelector('.active');
-        const nextActiveDotEl = dotsEl.childNodes[index];
+        // prendo la thumbnail corrente e la prossima attiva
+        const activeThumbEl = thumbnailsEl.querySelector('.active');
+        const nextActiveThumbEl = thumbnailsEl.childNodes[index];
     
-        activeDotEl.classList.remove('active');
-        nextActiveDotEl.classList.add('active');
+        activeThumbEl.classList.remove('active');
+        nextActiveThumbEl.classList.add('active');
     }
 });
 
-dotsEl.addEventListener('mouseenter', slidesWrapperHover);
-dotsEl.addEventListener('mouseleave', slidesWrapperLeave);
+thumbnailsEl.addEventListener('mouseenter', slidesWrapperHover);
+thumbnailsEl.addEventListener('mouseleave', slidesWrapperLeave);
 
 const arrowsEl = document.querySelector('.arrows');
 arrowsEl.addEventListener('mouseenter', slidesWrapperHover);
