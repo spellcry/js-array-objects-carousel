@@ -94,6 +94,22 @@ ul {
 	cursor: pointer;
 }
 
+.autoplay {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	font-size: 2rem;
+	background-color: transparent;
+	border: none;
+	color: rgba(255, 140, 0, 0.4);
+	transition: color 150ms linear;
+	cursor: pointer;
+}
+
+.slider:hover .autoplay {
+	color: rgba(255, 140, 0, 1);
+}
+
 /* #region Thumbnails */
 .thumbnails {
 	display: flex;

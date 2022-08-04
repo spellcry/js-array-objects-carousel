@@ -206,12 +206,23 @@ const arrowsEl = document.querySelector('.arrows');
 arrowsEl.addEventListener('mouseenter', slidesWrapperHover);
 arrowsEl.addEventListener('mouseleave', slidesWrapperLeave);
 
-let clock = setInterval(nextArrowClick, 4000);
+let clockDirection = nextArrowClick;
+let clock = setInterval(clockDirection, 4000);
 
 function slidesWrapperHover() {
     clearInterval(clock);
 }
 
 function slidesWrapperLeave() {
-    clock = setInterval(nextArrowClick, 3000);
+    clock = setInterval(clockDirection, 3000);
 }
+
+const autoplayEl = document.querySelector('.autoplay');
+autoplayEl.addEventListener('click', function() {
+    clearInterval(clock);
+    if ( clockDirection === nextArrowClick )
+        clockDirection = prevArrowClick;
+    else
+        clockDirection = nextArrowClick;
+    clock = setInterval(clockDirection, 3000);
+});
