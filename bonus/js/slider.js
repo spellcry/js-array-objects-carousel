@@ -125,15 +125,6 @@ function createDot(i) {
     return dotEl;
 }
 
-for ( let i = 0; i < slides.length; i++ ) {
-    // creo dot
-
-    
-
-    
-
-}
-
 const nextArrowEl = document.querySelector('.arrow-next');
 
 // funzione che gestisce il click della freccia avanti
